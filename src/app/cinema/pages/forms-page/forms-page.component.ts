@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { JsonPipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-forms-page',
@@ -10,6 +11,14 @@ import { JsonPipe } from '@angular/common';
 })
 export class FormspageComponent {
   private fb = new FormBuilder();
+  claseForm: FormGroup;
+  constructor() {
+    this.claseForm= this.fb.group({
+      name:['',[Validators.required, Validators.minLength(3)]],
+      email:['', [Validators.email, Validators.required]],
+      mensaje:['',[Validators.required, Validators.minLength(10)]],
+    })
+  }
 
   name= new FormControl('');
 
@@ -18,5 +27,15 @@ export class FormspageComponent {
   }
   onChangeName(){
     console.log(this.name);
+  }
+  onSubmit() {
+    console.log('Form Submitted!', this.claseForm);
+    if (this.claseForm.valid) {
+      // Aquí puedes manejar el envío del formulario, por ejemplo, enviarlo a un servidor
+      console.log('Formulario válido:', this.claseForm.value);
+    } else {
+      console.log('Formulario inválido');
+    }
+
   }
 }

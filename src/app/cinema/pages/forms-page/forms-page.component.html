@@ -1,3 +1,48 @@
-<input type="text" placeholder="Nombre" [formControl]="name"(input)="onChangeName()" >
+<!-- <input type="text" placeholder="Nombre" [formControl]="name"(input)="onChangeName()" >
 
-<h6> {{ name | json }}</h6>
+<h6> {{ name | json }}</h6> -->
+
+<div class="container mx-auto p-6">
+  <div class=" card bg-base-100 shaddow-xl">
+    <div class="card-body">
+      <h2 class="card-title text-2xl">Formulario Reactivo</h2>
+      <form class="space-y-4 "[formGroup]="claseForm"(ngSubmit)="onSubmit()">
+          <div class="form-control">
+            <!--input nombre-->
+            <label class="label">
+              <span class="label-text font-medium ">Nombre</span>
+              <input formControlName="name" placeholder="Nombre" class="input input-bordered w-full">
+            </label>
+
+          <form class="space-y-4">
+               <label class="label">
+              <span class="label-text font-medium ">Email</span>
+              <input formControlName="email" placeholder="Email" class="input input-bordered w-full">
+            </label>
+          </form>
+        <!--* Textarea del mensaje -->
+        <div class="form-control">
+        <label class="label">
+        <span class="label-text font-medium">Mensaje</span>
+        </label>
+        </div>
+<textarea
+placeholder="Mensaje.."
+rows="3"
+formControlName="mensaje"
+class="textarea textarea-bordered w-full"
+></textarea>
+ <div class="form-control mt-6">
+    <button type="submit" class="btn btn-primary w-full ">Submit</button>
+  </div>
+</div>
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <h6> {{claseForm.value | json }}</h6>
+</div>
+
