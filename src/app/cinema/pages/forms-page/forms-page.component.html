@@ -1,1 +1,3 @@
-<p>forms-age works!</p>,
+<input type="text" placeholder="Nombre" [formControl]="name"(input)="onChangeName()" >
+
+<h6> {{ name | json }}</h6>

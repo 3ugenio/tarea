@@ -33,7 +33,7 @@ export class SidebarComponent {
     {
       label: 'formularios',
       icon: 'form',
-      route: 'form',
+      route: 'forms',
     }
 
   ]);
