@@ -17,10 +17,13 @@ export const cinemaRoutes: Routes = [
         component: MoviePageComponent
       },
       {
+        path: 'forms',
+        loadComponent: () => import('./pages/forms-page/forms-page.component').then(m => m.FormspageComponent)
+      },
+      {
         path: '**',
         redirectTo: 'now-playing'
       },
-
 
     ]
   }
