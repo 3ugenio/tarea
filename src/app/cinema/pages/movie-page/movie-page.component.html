@@ -1,0 +1,32 @@
+<div class="flex justify-center items-center bg-blue-300 rounded-full ">
+  <div class=" text-black px-6 py-3 text-4xl whitespace-nowrap inline-flex items-center justify-center w-auto">
+    {{ movie?.name }}
+  </div>
+</div>
+  <!--imagen -->
+<div class="flex justify-center items-center bg-base-200 gap-5">
+  <div class="bg-blue-300 rounded-box mt-4 text-black px-4 py-4 text-xl whitespace-nowrap inline-flex items-center justify-center max-w-full ">
+    <img src={{movie?.posterImg}} alt="Img va aca">
+  </div>
+ <div class="bg-blue-100  p-8 rounded-lg shadow-xl border border-blue-300 w-full max-w-md">
+    <p class="text-2xl font-semibold text-center text-black mb-4">
+      Descripcion
+    </p>
+    <p class="text-black text-center">
+        {{movie?.description}}
+    </p>
+    <div class="flex flex-col md:flex-row justify-center items-start gap-4 p-4 text-black">
+      <!-- Rating -->
+      <div>Rating: </div><div class="bg-blue-300 rounded-full p-1 justify-center">{{ movie?.rating| number:'1.1-1'}}/10 </div>
+      <!-- popularity-->
+      <div>popularity</div><div class="bg-blue-300 rounded-full p-1 justify-center">{{ movie?.popularity| number:'1.1-1' }} </div>
+    </div>
+    <div class=" flex flex-col md:flex-row items-center gap-4 p-2 justify-center ">
+      @if (movie?.genres!= undefined){
+        @for (genre of movie?.genres; track $index) {
+          <div class="text-black bg-blue-300 rounded-full p-2 ">{{movie!.genres[$index].name}}</div>
+        }
+      }
+    </div>
+  </div>
+</div>
