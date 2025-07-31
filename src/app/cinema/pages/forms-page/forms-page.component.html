@@ -3,7 +3,7 @@
 <h6> {{ name | json }}</h6> -->
 
 <div class="container mx-auto p-6">
-  <div class=" card bg-base-100 shaddow-xl">
+  <div class=" card bg-base-100 shaddow-xl ">
     <div class="card-body">
       <h2 class="card-title text-2xl">Formulario Reactivo</h2>
       <form class="space-y-4 "[formGroup]="claseForm"(ngSubmit)="onSubmit()">
@@ -11,14 +11,43 @@
             <!--input nombre-->
             <label class="label">
               <span class="label-text font-medium ">Nombre</span>
-              <input formControlName="name" placeholder="Nombre" class="input input-bordered w-full">
+              <input formControlName="name"
+              placeholder="Nombre"
+              class="input input-bordered w-full"
+              [class.input-error]="hasError('name')"
+              [class.input-success]="isValid('name')">
+               @if (hasError('name')) {
+                 <label class="label ">
+                <!-- @if (claseForm.get('name')!.errors!['required']) {
+                  <span class="label-text-alt text-error">El campo es requerido</span>
+                } -->
+                  <span class="label-text-alt text-error">{{getErrorMessage('name')}}</span>
+
+
+              </label>
+
+                  }
+
             </label>
 
-          <form class="space-y-4">
+          <form class="space-y-5 ">
                <label class="label">
               <span class="label-text font-medium ">Email</span>
-              <input formControlName="email" placeholder="Email" class="input input-bordered w-full">
+              <input formControlName="email" placeholder="Email" class="input input-bordered w-full"
+              [class.input-error]="hasError('email')"
+              [class.input-success]="isValid('email')">
             </label>
+             @if (hasError('name')) {
+                 <label class="label ">
+                <!-- @if (claseForm.get('name')!.errors!['required']) {
+                  <span class="label-text-alt text-error">El campo es requerido</span>
+                } -->
+                  <span class="label-text-alt text-error">{{getErrorMessage('email')}}</span>
+
+
+              </label>
+
+                  }
           </form>
         <!--* Textarea del mensaje -->
         <div class="form-control">
@@ -31,18 +60,45 @@ placeholder="Mensaje.."
 rows="3"
 formControlName="mensaje"
 class="textarea textarea-bordered w-full"
+[class.input-error]="hasError('mensaje')"
+[class.input-success]="isValid('mensaje')"
 ></textarea>
+    @if (hasError('name')) {
+                 <label class="label ">
+                <!-- @if (claseForm.get('name')!.errors!['required']) {
+                  <span class="label-text-alt text-error">El campo es requerido</span>
+                } -->
+                  <span class="label-text-alt text-error">{{getErrorMessage('mensaje')}}</span>
+
+
+              </label>
+
+                  }
  <div class="form-control mt-6">
-    <button type="submit" class="btn btn-primary w-full ">Submit</button>
+    <button type="submit" class="btn btn-primary w-full " [disabled]="!claseForm.valid || isSubmitting()">
+      @if (isSubmitting()) {
+      <span class="loading loading-spinner loading-sm">
+        Enviando...
+      </span>}
+    @else {
+      Enviar
+    }
+
+    </button>
   </div>
 </div>
       </form>
+      @if (isSend()) {
+        <div class="alert alert-success justify-center mx-20">
+          <span> Formulario enviado </span>
+        </div>
+      }
 
     </div>
 
   </div>
 
 
-  <h6> {{claseForm.value | json }}</h6>
+  <!-- <h6> {{claseForm.value | json }}</h6> -->
 </div>
 
