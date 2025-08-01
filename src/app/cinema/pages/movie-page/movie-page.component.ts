@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CinemaService } from '../../services/cinema.service';
 import { Movie, Trailer } from '../../interfaces/movie.interface';
@@ -17,6 +17,7 @@ export class MoviePageComponent implements OnInit {
   movie : Movie | null = null;
   trailer: Trailer | null = null;
   videoUrl: SafeResourceUrl | null = null;
+  isLoading = signal<boolean>(true);
 
   constructor( private route: ActivatedRoute, private cinemaService: CinemaService, private sanitizer: DomSanitizer) {
     // Inicialización del componente
@@ -24,37 +25,41 @@ export class MoviePageComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.isLoadingMovie();
+  } // ngOnInit
+
+  // Mètodo para llamar la informaciòn de la película, una vez que se obtenga información, el estado de carga se actualizará
+  isLoadingMovie() {
     this.movieId = this.route.snapshot.paramMap.get('id');
 
     if (this.movieId) {
       this.cinemaService.getMovieById(this.movieId).subscribe({
         next: (movie: Movie) => {
           this.movie = movie;
-
         },
         error: (error) => {
           console.error('Error Obteniendo los datos de la pelicula:', error);
         }
       });
-    //   this.cinemaService.getMovieVideos(this.movieId).subscribe({
-    //     next: (videos: Trailer[]) => {
-    //       if (videos.length > 0) {
-    //         this.trailer = videos[0];
-    //         this.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${this.trailer.key}`);
+      this.cinemaService.getMovieVideos(this.movieId).subscribe({
+        next: (videos: Trailer[]) => {
+          if (videos.length > 0) {
+            this.trailer = videos[0];
+            this.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${this.trailer.key}`);
 
 
-    //       } else {
-    //         console.warn('No se encontraron tráileres para esta película.');
-    //       }
-    //     },
-    //     error: (error) => {
-    //       console.error('Error obteniendo los tráileres:', error);
-    //     }
-    //   });
-    // } else {
-    //   console.error('No se encontro el ID de la película en la ruta');
-    // }
+          } else {
+            console.warn('No se encontraron tráileres para esta película.');
+          }
+        },
+        error: (error) => {
+          console.error('Error obteniendo los tráileres:', error);
+        }
+      });
 
+      this.isLoading.set(false);
+    } else {
+      console.error('No se encontro el ID de la película en la ruta');
+    }
   }
-
-}}
+}

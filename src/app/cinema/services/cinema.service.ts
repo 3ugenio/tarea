@@ -50,21 +50,21 @@ export class CinemaService {
         })
       );
   }
-  // getMovieVideos(id: string) {
-  //   const url = `${environment.apiUrlTMDB}/movie/${id}/videos`;
+  getMovieVideos(id: string) {
+    const url = `${environment.apiUrlTMDB}/movie/${id}/videos`;
 
-  //   const headers = new HttpHeaders()
-  //     .set('Authorization', `Bearer ${environment.token}`)
+    const headers = new HttpHeaders()
+      .set('Authorization', `Bearer ${environment.token}`)
 
-  //   return this.http.get(url, { headers })
-  //     .pipe(
-  //       map((response: any) => response.results),
-  //       map((videos: any[]) => (VideoMapper.mapTMDBVideosToTrailers(videos.filter(video => video.site === 'YouTube' && video.type === 'Trailer'))),
-  //       catchError((error: HttpErrorResponse) => {
-  //         console.error(error);
-  //         return throwError(() => new Error(error.message));
-  //       })
-  //     ))
-  // }
+    return this.http.get(url, { headers })
+      .pipe(
+        map((response: any) => response.results),
+        map((videos: any[]) => (VideoMapper.mapTMDBVideosToTrailers(videos.filter(video => video.site === 'YouTube' && video.type === 'Trailer'))),
+        catchError((error: HttpErrorResponse) => {
+          console.error(error);
+          return throwError(() => new Error(error.message));
+        })
+      ))
+  }
 
 }
